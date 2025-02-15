@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f8f8;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        color: #333;
+    }
+
+    .add-block {
+        margin-bottom: 15px;
+    }
+
+    #add-task {
+        width: 250px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    #add-button {
+        padding: 8px 15px;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .block-tasks {
+        max-width: 400px;
+        margin: auto;
+        text-align: left;
+    }
+
+    .task-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: white;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .task-item input[type="checkbox"] {
+        margin-right: 10px;
+    }
+
+    .task-item label {
+        flex-grow: 1;
+    }
+
+    .task-item input[type="checkbox"]:checked + label {
+        text-decoration: line-through;
+        color: #888;
+    }
+
+    .delete-button {
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+  </style>
+  <title>ToDo List</title>
+</head>
+<body>
+
+<h1>ToDo List</h1>
+
+<div class="add-block">
+  <input id="add-task" type="text" placeholder="Add new task">
+  <button id="add-button" onclick="addTheTask()">Add</button>
+</div>
+
+<div class="block-tasks"></div>
+
+<script>
+  function addTheTask() {
+    const taskInput = document.getElementById("add-task");
+    const taskName = taskInput.value.trim();
+    if (!taskName) {
+      alert("Enter a task");
+      return;
+    }
+
+    const newTask = document.createElement("div");
+    newTask.classList.add("task-item");
+
+    const checkBox = document.createElement("input");
+    checkBox.type = "checkbox";
+
+    const label = document.createElement("label");
+    label.textContent = taskName;
+
+    checkBox.addEventListener("change", function() {
+      if (checkBox.checked) {
+        label.style.textDecoration = "line-through";
+        label.style.color = "#888";
+      } else {
+        label.style.textDecoration = "none";
+        label.style.color = "black";
+      }
+    });
+
+    const deleteButton = document.createElement("button");
+    deleteButton.classList.add("delete-button");
+    deleteButton.textContent = "❌";
+    deleteButton.onclick = function () {
+      newTask.remove();
+    };
+
+    newTask.append(checkBox, label, deleteButton);
+    document.querySelector(".block-tasks").appendChild(newTask);
+    taskInput.value = "";
+  }
+</script>
+
+</body>
+</html>
